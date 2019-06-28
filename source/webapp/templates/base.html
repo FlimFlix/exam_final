@@ -23,6 +23,9 @@
             <li class="nav-item">
                 <a href="{% url 'webapp:article_list' %}" class="nav-link">Главная</a>
             </li>
+            <li class="nav-item">
+                <a href="{% url 'webapp:article_create' %}" class="nav-link">Добавить статью</a>
+            </li>
             {% block menu %}{% endblock %}
         </ul>
     </div>
