@@ -8,12 +8,16 @@
             <div class="row no-gutters">
                 <div class="col-md-4">
                     {% if article.image %}
-                        <img src="{{ article.image.url }}" class="card-img" alt="{{ article.image.name }}">
+                        <div class="img-wrapper">
+                            <img src="{{ article.image.url }}" class="card-img" alt="{{ article.image.name }}">
+                        </div>
                     {% endif %}
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{{ article.title }}</h5>
+                        <h2 class="card-title">
+                            <a href="{% url 'webapp:article_detail' article.pk %}" class="card-link">{{ article.title }}</a>
+                        </h2>
                         <p class="card-text">{{ article.text }}</p>
                         <p class="card-text">
                             <small class="text-muted">{{ article.author }} | {{ article.created_at }}</small>
