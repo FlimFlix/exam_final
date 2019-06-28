@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1 class="mt-2">{{ article.title }}</h1>
+    {% if user == article.author %}
+        <a class="float-right" href="{% url 'webapp:article_update' article.pk %}">Редактировать</a>
+    {% endif %}
     <p class="card-text">{{ article.author }} | {{ article.created_at }}</p>
     {% if article.image %}
         <div class="img-wrapper">
