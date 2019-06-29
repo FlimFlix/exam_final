@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, Author
+from .models import Article, Author, Book
 
 
 class ArticleForm(forms.ModelForm):
@@ -17,3 +17,9 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ['full_name', 'death_date', 'birth_date', 'biography', 'photo']
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'publish_year', 'file', 'cover', 'description']

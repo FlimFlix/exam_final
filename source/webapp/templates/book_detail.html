@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Книга{% endblock %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        <a href="{% url 'webapp:book_update' book.pk %}" class="btn btn-success m-2">Редактировать</a>
+        <a href="#" class="btn btn-danger m-2">Удалить</a>
+    {% endif %}
+    <div class="row">
+        <div class="card-body col-sm-8">
+            <p class="text  ">{{ book.title }}</p>
+        </div>
+        <div class="col-sm-4 mt-2" style="width: 18rem;">
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" class="card-img-top" alt="{{ book.cover.name }}">
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

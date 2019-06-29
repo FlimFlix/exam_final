@@ -9,7 +9,3 @@
         {% include 'partial/author_form.html' %}
     </form>
 {% endblock %}
-
-class AuthorDeleteView(DeleteView):
-    template_name = 'author_delete.html'
-    model = Author

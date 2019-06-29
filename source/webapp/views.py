@@ -2,8 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from webapp.forms import ArticleForm, AuthorForm
+from webapp.forms import ArticleForm, AuthorForm, BookForm
 from webapp.models import Article, Author, Book
+from django.urls import reverse
 
 
 class ArticleListView(ListView):
@@ -30,14 +31,19 @@ class ArticleDetailView(DetailView):
     model = Article
 
 
+class UserDetailView(DetailView):
+    template_name = 'user_detail.html'
+    model = Article
+
+
 class AuthorDetailView(DetailView):
     template_name = 'author_detail.html'
     model = Author
 
 
-class UserDetailView(DetailView):
-    template_name = 'user_detail.html'
-    model = Article
+class BookDetailView(DetailView):
+    template_name = 'book_detail.html'
+    model = Book
 
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
@@ -57,6 +63,16 @@ class AuthorCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'administrations'
 
 
+class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    template_name = 'book_create.html'
+    form_class = BookForm
+    model = Book
+    permission_required = 'administrations'
+
+    def get_success_url(self):
+        return reverse('webapp:book_detail', kwargs={'pk': self.object.pk})
+
+
 class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'article_update.html'
     form_class = ArticleForm
@@ -74,6 +90,16 @@ class AuthorUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = AuthorForm
     model = Author
     permission_required = 'administrations'
+
+
+class BookUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    template_name = 'book_update.html'
+    form_class = BookForm
+    model = Book
+    permission_required = 'administrations'
+
+    def get_success_url(self):
+        return reverse('webapp:book_detail', kwargs={'pk': self.object.pk})
 
 
 def soft_delete_author(request, pk):

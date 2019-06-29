@@ -1,12 +1,15 @@
 from django.urls import path
 from .views import ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, \
     UserDetailView, AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView, \
-    soft_delete_author, BookListView
+    soft_delete_author, BookListView, BookCreateView, BookDetailView, BookUpdateView
 
 app_name = 'webapp'
 
 urlpatterns = [
     path('', BookListView.as_view(), name='book_list'),
+    path('books/create/', BookCreateView.as_view(), name='book_create'),
+    path('books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
+    path('books/<int:pk>/edit', BookUpdateView.as_view(), name='book_update'),
     path('articles/', ArticleListView.as_view(), name='article_list'),
     path('articles/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
     path('articles/create/', ArticleCreateView.as_view(), name='article_create'),
