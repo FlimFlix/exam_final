@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
 from webapp.forms import ArticleForm, AuthorForm, BookForm
 from webapp.models import Article, Author, Book
 from django.urls import reverse
@@ -110,3 +110,14 @@ def soft_delete_author(request, pk):
         return redirect('webapp:author_list')
     else:
         raise PermissionDenied
+
+
+class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    template_name = 'book_detail.html'
+    model = Book
+    permission_required = 'administrations'
+
+    def get(self, request, pk):
+        book = get_object_or_404(Book, pk=pk)
+        book.delete()
+        return redirect('webapp:book_list')
