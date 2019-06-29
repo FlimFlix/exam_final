@@ -6,7 +6,6 @@
     <h1 class="mt-3">Добавить статью</h1>
     <form method="post" enctype="multipart/form-data" action="{% url 'webapp:article_create' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Отправить</button>
+        {% include 'partial/article_form.html' %}
     </form>
 {% endblock %}
