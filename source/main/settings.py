@@ -122,9 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'webapp:article_list'
+LOGIN_REDIRECT_URL = 'webapp:book_list'
 
-LOGOUT_REDIRECT_URL = 'webapp:article_list'
+LOGOUT_REDIRECT_URL = 'webapp:book_list'
 
 
 # Uploads

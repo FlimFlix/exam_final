@@ -1,12 +1,13 @@
 from django.urls import path
 from .views import ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, \
     UserDetailView, AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView, \
-    soft_delete_author
+    soft_delete_author, BookListView
 
 app_name = 'webapp'
 
 urlpatterns = [
-    path('', ArticleListView.as_view(), name='article_list'),
+    path('', BookListView.as_view(), name='book_list'),
+    path('articles/', ArticleListView.as_view(), name='article_list'),
     path('articles/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
     path('articles/create/', ArticleCreateView.as_view(), name='article_create'),
     path('articles/<int:pk>/edit/', ArticleUpdateView.as_view(), name='article_update'),
@@ -15,5 +16,5 @@ urlpatterns = [
     path('authors/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
     path('authors/create/', AuthorCreateView.as_view(), name='author_create'),
     path('authors/<int:pk>/edit', AuthorUpdateView.as_view(), name='author_update'),
-    path('authors/<int:pk>/delete', soft_delete_author, name='author_delete'),
+    path('authors/<int:pk>/delete', soft_delete_author, name='author_delete')
 ]

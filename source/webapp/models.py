@@ -21,12 +21,31 @@ class Author(models.Model):
 
     objects = SoftDeleteManager()
 
+    def __str__(self):
+        return self.full_name
+
     def get_absolute_url(self):
         return reverse('webapp:author_detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = "Автор"
         verbose_name_plural = "Авторы"
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Название")
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    publish_year = models.CharField(max_length=200, verbose_name="Год издания")
+    file = models.FileField(upload_to='book_file', blank=True, null=True, verbose_name="Файл")
+    cover = models.ImageField(upload_to='book_cover', blank=True, null=True, verbose_name="Обложка")
+    description = models.TextField(max_length=3000, null=True, blank=True, verbose_name="Описание")
+
+    def get_absolute_url(self):
+        return reverse('webapp:author_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        verbose_name = "Книга"
+        verbose_name_plural = "Книги"
 
 
 class Article(models.Model):

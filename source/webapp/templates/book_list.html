@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Авторы{% endblock %}
+
+{% block content %}
+    {% for book in book_list %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                {% if book.cover %}
+                    <div class="col-md-4">
+                        <img src="{{ book.cover.url }}" class="card-img" alt="{{ book.cover.name }}">
+                    </div>
+                {% endif %}
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">{{ book.description }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ book.publish_year }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

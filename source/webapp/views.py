@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from webapp.forms import ArticleForm, AuthorForm
-from webapp.models import Article, Author
+from webapp.models import Article, Author, Book
 
 
 class ArticleListView(ListView):
@@ -19,6 +18,11 @@ class AuthorListView(ListView):
 
     def get_queryset(self):
         return Author.objects.filter(is_deleted=False)
+
+
+class BookListView(ListView):
+    template_name = 'book_list.html'
+    model = Book
 
 
 class ArticleDetailView(DetailView):
