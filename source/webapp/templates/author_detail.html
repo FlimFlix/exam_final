@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Автор{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card-body col-sm-8">
+            <p class="text">{{ author.biography }}</p>
+        </div>
+        <div class="col-sm-4 mt-2" style="width: 18rem;">
+            <img src="{{ author.photo.url }}" class="card-img-top" alt="{{ author.photo.name }}">
+        </div>
+    </div>
+{% endblock %}

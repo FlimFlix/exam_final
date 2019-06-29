@@ -20,6 +20,11 @@ class ArticleDetailView(DetailView):
     model = Article
 
 
+class AuthorDetailView(DetailView):
+    template_name = 'author_detail.html'
+    model = Author
+
+
 class UserDetailView(DetailView):
     template_name = 'user_detail.html'
     model = Article

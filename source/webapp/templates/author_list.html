@@ -7,7 +7,7 @@
     <div class="card mt-2" style="width: 18rem;">
         <img src="{{ author.photo.url }}" class="card-img-top" alt="{{ author.photo.name }}">
         <div class="card-body">
-            <p class="card-text"><a href="#">{{ author.full_name }}</a></p>
+            <p class="card-text"><a href="{% url 'webapp:author_detail' author.pk %}">{{ author.full_name }}</a></p>
         </div>
     </div>
     {% endfor %}
