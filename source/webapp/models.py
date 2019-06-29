@@ -3,12 +3,23 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
+class SoftDeleteManager(models.Manager):
+    def active(self):
+        return self.filter(is_deleted=False)
+
+    def deleted(self):
+        return self.filter(is_deleted=True)
+
+
 class Author(models.Model):
     full_name = models.CharField(max_length=200, verbose_name="Автор")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     death_date = models.DateField(null=True, blank=True, verbose_name="Дата смерти")
     biography = models.TextField(max_length=5000, null=True, blank=True, verbose_name="Биография автора")
     photo = models.ImageField(upload_to='author_images', blank=True, null=True, verbose_name="Фотография")
+    is_deleted = models.BooleanField(default=False)
+
+    objects = SoftDeleteManager()
 
     def get_absolute_url(self):
         return reverse('webapp:author_detail', kwargs={'pk': self.pk})

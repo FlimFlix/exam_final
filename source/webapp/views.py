@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import ArticleForm, AuthorForm
 from webapp.models import Article, Author
@@ -13,6 +15,9 @@ class ArticleListView(ListView):
 class AuthorListView(ListView):
     template_name = 'author_list.html'
     model = Author
+
+    def get_queryset(self):
+        return Author.objects.filter(is_deleted=False)
 
 
 class ArticleDetailView(DetailView):
@@ -58,7 +63,14 @@ class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return self.request.user == self.get_object().author
 
 
-class AuthorUpdateView(UpdateView):
+class AuthorUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'author_update.html'
     form_class = AuthorForm
     model = Author
+
+
+def soft_delete_author(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    author.is_deleted = True
+    author.save()
+    return redirect('webapp:author_list')

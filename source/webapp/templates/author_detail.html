@@ -3,7 +3,10 @@
 {% block title %}Автор{% endblock %}
 
 {% block content %}
-    <a href="{% url 'webapp:author_update' author.pk%}" class="btn btn-primary m-2">Редактировать</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'webapp:author_update' author.pk%}" class="btn btn-success m-2">Редактировать</a>
+        <a href="{% url 'webapp:author_delete' author.pk%}" class="btn btn-danger m-2">Удалить</a>
+    {% endif %}
     <div class="row">
         <div class="card-body col-sm-8">
             <p class="text">{{ author.biography }}</p>

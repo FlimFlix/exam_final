@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, \
-    UserDetailView, AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView
+    UserDetailView, AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView, \
+    soft_delete_author
 
 app_name = 'webapp'
 
@@ -14,5 +15,5 @@ urlpatterns = [
     path('authors/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
     path('authors/create/', AuthorCreateView.as_view(), name='author_create'),
     path('authors/<int:pk>/edit', AuthorUpdateView.as_view(), name='author_update'),
-
+    path('authors/<int:pk>/delete', soft_delete_author, name='author_delete'),
 ]
