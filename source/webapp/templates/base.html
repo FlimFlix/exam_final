@@ -26,7 +26,7 @@
                     <a href="{% url 'webapp:book_list' %}" class="nav-link">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'webapp:author_list' %}" class="nav-link">Наши авторы</a>
+                    <a href="{% url 'webapp:author_list' %}" class="nav-link">Авторы</a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'webapp:article_create' %}" class="nav-link">Добавить статью</a>
@@ -45,7 +45,7 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="{% url 'webapp:user_detail' user.pk %}" class="nav-link">{{ user.username }}</a>
+                        <a href="{% url 'webapp:user_detail' user.pk %}" class="nav-link">личный кабинет: {{ user.username }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'accounts:logout' %}" class="nav-link">выйти</a>

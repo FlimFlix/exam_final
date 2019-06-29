@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
-from webapp.forms import ArticleForm, AuthorForm, BookForm
-from webapp.models import Article, Author, Book
+from webapp.forms import ArticleForm, AuthorForm, BookForm, CommentForm
+from webapp.models import Article, Author, Book, Comment
 from django.urls import reverse
 
 
@@ -50,6 +50,18 @@ class AuthorDetailView(DetailView):
 class BookDetailView(DetailView):
     template_name = 'book_detail.html'
     model = Book
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'book_detail.html'
+    form_class = CommentForm
+    model = Comment
+
+    def get_context_data(self, **kwargs):
+        pass
+
+    def get_queryset(self):
+        return Comment.objects.filter('-created_at')
 
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
