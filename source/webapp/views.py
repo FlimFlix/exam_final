@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from webapp.forms import ArticleForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from webapp.forms import ArticleForm, AuthorForm
 from webapp.models import Article, Author
 
 
@@ -38,6 +38,12 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class AuthorCreateView(CreateView):
+    template_name = 'author_create.html'
+    form_class = AuthorForm
+    model = Author
 
 
 class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):

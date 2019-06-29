@@ -8,7 +8,9 @@
             <p class="text">{{ author.biography }}</p>
         </div>
         <div class="col-sm-4 mt-2" style="width: 18rem;">
-            <img src="{{ author.photo.url }}" class="card-img-top" alt="{{ author.photo.name }}">
+            {% if author.photo %}
+                <img src="{{ author.photo.url }}" class="card-img-top" alt="{{ author.photo.name }}">
+            {% endif %}
         </div>
     </div>
 {% endblock %}
