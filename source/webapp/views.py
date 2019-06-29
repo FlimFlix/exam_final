@@ -56,3 +56,9 @@ class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
     def has_permission(self):
         return self.request.user == self.get_object().author
+
+
+class AuthorUpdateView(UpdateView):
+    template_name = 'author_update.html'
+    form_class = AuthorForm
+    model = Author

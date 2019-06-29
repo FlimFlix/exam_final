@@ -3,6 +3,7 @@
 {% block title %}Автор{% endblock %}
 
 {% block content %}
+    <a href="{% url 'webapp:author_update' author.pk%}" class="btn btn-primary m-2">Редактировать</a>
     <div class="row">
         <div class="card-body col-sm-8">
             <p class="text">{{ author.biography }}</p>
