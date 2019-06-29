@@ -4,17 +4,20 @@
 
 {% block content %}
     {% if user.is_superuser %}
-        <a href="{% url 'webapp:author_update' author.pk%}" class="btn btn-success m-2">Редактировать</a>
-        <a href="{% url 'webapp:author_delete' author.pk%}" class="btn btn-danger m-2">Удалить</a>
+        <a href="{% url 'webapp:author_update' author.pk%}" class="btn btn-success mt-2">Редактировать</a>
+        <a href="{% url 'webapp:author_delete' author.pk%}" class="btn btn-danger mt-2">Удалить</a>
     {% endif %}
     <div class="row">
         <div class="card-body col-sm-8">
+            <h1 class="text-center">Биография</h1>
             <p class="text">{{ author.biography }}</p>
         </div>
         <div class="col-sm-4 mt-2" style="width: 18rem;">
+        <div class="card-title text-center"><h2>{{ author.full_name }}</h2>
             {% if author.photo %}
                 <img src="{{ author.photo.url }}" class="card-img-top" alt="{{ author.photo.name }}">
             {% endif %}
+        </div>
         </div>
     </div>
 {% endblock %}

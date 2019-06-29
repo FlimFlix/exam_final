@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
@@ -33,12 +34,17 @@ class ArticleDetailView(DetailView):
 
 class UserDetailView(DetailView):
     template_name = 'user_detail.html'
-    model = Article
+    model = User
 
 
 class AuthorDetailView(DetailView):
     template_name = 'author_detail.html'
     model = Author
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(AuthorDetailView, self).get_context_data(**kwargs)
+    #     context['book_list'] = Book.objects.all().order_by('author_id')
+    #     return context
 
 
 class BookDetailView(DetailView):

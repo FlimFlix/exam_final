@@ -4,10 +4,15 @@
 
 {% block content %}
     {% if user.is_superuser %}
-        <a href="{% url 'webapp:book_update' book.pk %}" class="btn btn-success m-2">Редактировать</a>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{ book.pk }}">
+        <a href="{% url 'webapp:book_update' book.pk %}" class="btn btn-success mt-2">Редактировать</a>
+        <button type="button" class="btn btn-danger mt-2" data-toggle="modal" data-target="#exampleModal{{ book.pk }}">
             Удалить
         </button>
+        {% endif %}
+
+        {% if book.file %}
+            <a href='{{ MEDIA_URL }}' download="{{ book.file }}" class="btn btn-primary mt-2">Скачать</a>
+        {% endif %}
         <div class="modal fade" id="exampleModal{{ book.pk }}" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -28,15 +33,17 @@
                 </div>
             </div>
         </div>
-    {% endif %}
 
     <div class="row">
         <div class="card-body col-sm-8">
-            <p class="text  ">{{ book.title }}</p>
+            <h1 class="card-title">{{ book.title }}</h1>
+            <p class="card-text">{{ book.description }}</p>
+
         </div>
+
         <div class="col-sm-4 mt-2" style="width: 18rem;">
             {% if book.cover %}
-                <img src="{{ book.cover.url }}" class="card-img-top" alt="{{ book.cover.name }}">
+                <img src="{{ book.cover.url }}" class="img-thumbnail" alt="{{ book.cover.name }}">
             {% endif %}
         </div>
     </div>
