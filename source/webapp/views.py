@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -45,10 +46,11 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class AuthorCreateView(CreateView):
+class AuthorCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = 'author_create.html'
     form_class = AuthorForm
     model = Author
+    permission_required = 'administrations'
 
 
 class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -63,14 +65,18 @@ class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return self.request.user == self.get_object().author
 
 
-class AuthorUpdateView(PermissionRequiredMixin, UpdateView):
+class AuthorUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'author_update.html'
     form_class = AuthorForm
     model = Author
+    permission_required = 'administrations'
 
 
 def soft_delete_author(request, pk):
-    author = get_object_or_404(Author, pk=pk)
-    author.is_deleted = True
-    author.save()
-    return redirect('webapp:author_list')
+    if request.user.is_superuser:
+        author = get_object_or_404(Author, pk=pk)
+        author.is_deleted = True
+        author.save()
+        return redirect('webapp:author_list')
+    else:
+        raise PermissionDenied
