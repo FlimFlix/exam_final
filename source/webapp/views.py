@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from webapp.forms import ArticleForm
-from webapp.models import Article
+from webapp.models import Article, User
 
 
 class ArticleListView(ListView):
@@ -12,6 +12,11 @@ class ArticleListView(ListView):
 
 class ArticleDetailView(DetailView):
     template_name = 'article_detail.html'
+    model = Article
+
+
+class UserDetailView(DetailView):
+    template_name = 'user_detail.html'
     model = Article
 
 
