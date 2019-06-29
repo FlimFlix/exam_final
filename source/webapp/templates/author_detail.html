@@ -20,4 +20,19 @@
         </div>
         </div>
     </div>
+     <h2 class="card-title">Книги данного автора:</h2>
+    {% for book in author.author.all %}
+        <div class="list-group mt-2">
+        <a href="{% url 'webapp:book_detail' book.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">{{ book.title }}</h4>
+                {% if book.publish_year %}:
+                    <small class="text-muted">Год выхода: {{ book.publish_year }}</small>
+                {% endif %}
+            </div>
+            <small class="text-muted">{{ book.description }}</small>
+        </a>
+    </div>
+    {% endfor %}
+
 {% endblock %}

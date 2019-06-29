@@ -43,9 +43,26 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('webapp:author_detail', kwargs={'pk': self.pk})
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name = "Книга"
         verbose_name_plural = "Книги"
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book')
+    text = models.TextField(max_length=2000, verbose_name="Текст")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('webapp:author_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Коментарии"
 
 
 class Article(models.Model):

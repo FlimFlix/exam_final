@@ -8,31 +8,31 @@
         <button type="button" class="btn btn-danger mt-2" data-toggle="modal" data-target="#exampleModal{{ book.pk }}">
             Удалить
         </button>
-        {% endif %}
+    {% endif %}
 
-        {% if book.file %}
-            <a href='{{ MEDIA_URL }}' download="{{ book.file }}" class="btn btn-primary mt-2">Скачать</a>
-        {% endif %}
-        <div class="modal fade" id="exampleModal{{ book.pk }}" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Подтверждение удаления книги</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Вы уверены, что хотите удалить {{ book.title }}?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <a href="{% url 'webapp:book_delete' book.pk %}" class="btn btn-danger">Удалить</a>
-                    </div>
+    {% if book.file %}
+        <a href='{{ MEDIA_URL }}' download="{{ book.file }}" class="btn btn-primary mt-2">Скачать</a>
+    {% endif %}
+    <div class="modal fade" id="exampleModal{{ book.pk }}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Подтверждение удаления книги</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите удалить {{ book.title }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a href="{% url 'webapp:book_delete' book.pk %}" class="btn btn-danger">Удалить</a>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="row">
         <div class="card-body col-sm-8">
@@ -44,7 +44,20 @@
         <div class="col-sm-4 mt-2" style="width: 18rem;">
             {% if book.cover %}
                 <img src="{{ book.cover.url }}" class="img-thumbnail" alt="{{ book.cover.name }}">
+            {% else %}
+                <img src="/media/no-image.png" class="img-thumbnail" alt="Заглушка">
             {% endif %}
         </div>
+
+
+        {% for comment in book.book.all %}
+            <ul class="list-group col-sm-8 mt-2">
+                <li class="list-group-item text-center">{{ comment.user }} | <small>{{ comment.created_at }}</small></li>
+                <li class="list-group-item ">{{ comment.text }}</li>
+            </ul>
+        {% endfor %}
+
     </div>
+
+
 {% endblock %}
