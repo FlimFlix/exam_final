@@ -1,13 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from webapp.forms import ArticleForm
-from webapp.models import Article, User
+from webapp.models import Article, Author
 
 
 class ArticleListView(ListView):
     template_name = 'article_list.html'
     model = Article
     ordering = ['-created_at']
+
+
+class AuthorListView(ListView):
+    template_name = 'author_list.html'
+    model = Author
 
 
 class ArticleDetailView(DetailView):

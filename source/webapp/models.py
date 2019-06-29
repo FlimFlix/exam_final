@@ -8,7 +8,14 @@ class Author(models.Model):
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     death_date = models.DateField(null=True, blank=True, verbose_name="Дата смерти")
     biography = models.TextField(max_length=5000, null=True, blank=True, verbose_name="Биография автора")
-    photo = models.ImageField(upload_to='author_images', blank=True, null=True, verbose_name="Автор")
+    photo = models.ImageField(upload_to='author_images', blank=True, null=True, verbose_name="Фотография")
+
+    def get_absolute_url(self):
+        return reverse('webapp:author_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        verbose_name = "Автор"
+        verbose_name_plural = "Авторы"
 
 
 class Article(models.Model):
